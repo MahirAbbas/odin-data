@@ -41,8 +41,8 @@ RUN dnf update -y && dnf install -y  \
 # Python dependencies
 RUN python3.11 -m ensurepip && \
     python3.11 -m venv /venv && \
-    python3.11 -m pip install --upgrade pip && \
-    python3.11 -m pip install git+https://github.com/odin-detector/odin-control
+    /venv/bin/python -m pip install --upgrade pip && \
+    /venv/bin/python -m pip install git+https://github.com/odin-detector/odin-control
 
 # Install hdf5filters from source
 RUN git clone https://github.com/DiamondLightSource/hdf5filters.git && cd hdf5filters && \
