@@ -29,7 +29,7 @@ RUN dnf update -y && dnf install -y  \
     # odin-data C++ dependencies
     blosc-devel boost-devel hdf5-devel log4cxx-devel libpcap-devel czmq-devel \
     # python
-    python3-devel \
+    python3.11-devel python3.11-pip \
     # clang tools
     clang20-tools-extra \
     # debugging
@@ -39,10 +39,10 @@ RUN dnf update -y && dnf install -y  \
 
 
 # Python dependencies
-RUN python3 -m ensurepip && \
-    python3 -m venv /venv && \
-    python -m pip install --upgrade pip && \
-    python -m pip install git+https://github.com/odin-detector/odin-control
+RUN python3.11 -m ensurepip && \
+    python3.11 -m venv /venv && \
+    python3.11 -m pip install --upgrade pip && \
+    python3.11 -m pip install git+https://github.com/odin-detector/odin-control
 
 # Install hdf5filters from source
 RUN git clone https://github.com/DiamondLightSource/hdf5filters.git && cd hdf5filters && \
@@ -65,7 +65,7 @@ RUN mkdir -p build && cd build && \
     make install
 
 # Python
-RUN python -m pip install /odin/odin-data/python[meta_writer]
+RUN python3.11 -m pip install /odin/odin-data/python[meta_writer]
 
 # Runtime stage ################################################################
 FROM common AS runtime
@@ -77,7 +77,7 @@ RUN dnf update -y && dnf install -y \
     # C++ dependencies
     blosc-devel boost-devel hdf5-devel log4cxx-devel libpcap-devel czmq-devel \
     # Python dependencies
-    python3-devel && \
+    python3.11-devel && \
     # Tidy up
     dnf -y clean all
 
